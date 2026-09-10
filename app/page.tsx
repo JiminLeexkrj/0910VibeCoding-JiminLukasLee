@@ -1,77 +1,95 @@
 import profile from "@/data/profile.json";
 
-export default function Home() {
-  return (
-    <div className="flex flex-col flex-1 items-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex w-full max-w-2xl flex-col gap-12 px-6 py-20 sm:py-28">
-        <header className="flex flex-col gap-2 text-center sm:text-left">
-          <h1 className="text-3xl font-semibold tracking-tight text-black dark:text-zinc-50">
-            {profile.name.en}{" "}
-            <span className="text-zinc-500 dark:text-zinc-400">
-              ({profile.name.kr})
-            </span>
-          </h1>
-          <p className="text-lg text-zinc-600 dark:text-zinc-400">
-            {profile.university} · {profile.department}
-          </p>
-        </header>
+const BARCODE_PATTERN = [2, 1, 3, 1, 1, 2, 3, 1, 2, 1, 1, 3, 2, 1, 3, 1, 2, 2, 1, 3];
 
-        <section className="flex flex-col gap-3">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-            Projects
-          </h2>
-          <ul className="flex flex-col gap-3">
+export default function Home() {
+  const [firstName, ...restName] = profile.name.en.split(" ");
+  const initials = `${firstName[0]}${restName[restName.length - 1]?.[0] ?? ""}`;
+
+  return (
+    <div className="flex flex-1 items-center justify-center bg-neutral-950 px-3 py-8 sm:px-6 sm:py-12">
+      <div className="relative w-full max-w-3xl border-[3px] border-white/90 bg-neutral-950 p-4 text-white sm:p-8">
+        {/* Special issue badge */}
+        <div className="absolute -right-2 -top-3 z-10 flex h-16 w-16 rotate-12 flex-col items-center justify-center rounded-full bg-yellow-400 text-center text-[9px] font-black uppercase leading-tight text-black shadow-lg sm:-right-4 sm:-top-4 sm:h-20 sm:w-20 sm:text-[10px]">
+          <span>Special</span>
+          <span>Intro</span>
+          <span>Issue</span>
+        </div>
+
+        {/* Top strip */}
+        <div className="mb-4 flex items-center justify-between text-[10px] uppercase tracking-[0.2em] text-white/70 sm:text-xs">
+          <span>Vol. 01 &middot; Sep 2026</span>
+          <span>Korea University Edition</span>
+        </div>
+
+        {/* Masthead */}
+        <h1
+          className="text-center font-[family-name:var(--font-bebas)] text-[20vw] leading-[0.82] tracking-tight text-red-600 sm:text-8xl md:text-9xl"
+          style={{ WebkitTextStroke: "1px rgba(255,255,255,0.15)" }}
+        >
+          {firstName.toUpperCase()}
+        </h1>
+        <p className="mt-1 text-center text-sm uppercase tracking-[0.35em] text-white/80 sm:text-base">
+          {restName.join(" ")} &middot; {profile.name.kr}
+        </p>
+
+        {/* Deck / tagline */}
+        <p className="mt-4 text-center text-sm font-semibold uppercase tracking-wide text-yellow-400 sm:text-base">
+          {profile.university} &mdash; {profile.department}
+        </p>
+
+        {/* Cover lines + hero medallion */}
+        <div className="mt-8 grid grid-cols-1 items-center gap-6 sm:grid-cols-[1fr_auto_1fr] sm:gap-4">
+          <ul className="space-y-3 text-center sm:text-left">
             {profile.projects.map((project) => (
               <li
                 key={project.title}
-                className="rounded-lg border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900"
+                className="text-xs font-bold uppercase leading-tight sm:text-sm"
               >
-                <div className="flex items-baseline justify-between gap-2">
-                  <h3 className="font-medium text-black dark:text-zinc-50">
-                    {project.title}
-                  </h3>
-                  <span className="text-sm text-zinc-500 dark:text-zinc-400">
-                    {project.year}
-                  </span>
-                </div>
-                <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-                  {project.stack.join(", ")}
-                </p>
+                <span className="text-red-500">Inside &rarr;</span>{" "}
+                {project.title}{" "}
+                <span className="font-normal normal-case text-white/50">
+                  ({project.year})
+                </span>
               </li>
             ))}
           </ul>
-        </section>
 
-        <section className="flex flex-col gap-3">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-            Interests
-          </h2>
-          {profile.interests.length > 0 ? (
-            <div className="flex flex-wrap gap-2">
-              {profile.interests.map((interest) => (
-                <span
-                  key={interest}
-                  className="rounded-full bg-zinc-200 px-3 py-1 text-sm text-zinc-700 dark:bg-zinc-800 dark:text-zinc-200"
-                >
-                  {interest}
-                </span>
-              ))}
-            </div>
-          ) : (
-            <p className="text-sm text-zinc-500 dark:text-zinc-400">
-              data/profile.json의 interests 항목을 채워주세요.
-            </p>
-          )}
-        </section>
+          <div className="mx-auto flex h-28 w-28 items-center justify-center rounded-full bg-gradient-to-br from-red-600 via-orange-500 to-yellow-400 text-5xl font-black text-black shadow-[6px_6px_0_0_rgba(255,255,255,0.12)] sm:h-36 sm:w-36 sm:text-6xl">
+            {initials.toUpperCase()}
+          </div>
 
-        <section className="flex flex-col gap-3">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-            Contact & Links
-          </h2>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">
-            {profile.contact.phone}
-          </p>
-          <div className="flex flex-wrap gap-3">
+          <ul className="space-y-3 text-center sm:text-right">
+            {profile.interests.length > 0 ? (
+              <li className="text-xs font-bold uppercase leading-tight sm:text-sm">
+                <span className="text-red-500">Plus &rarr;</span>{" "}
+                {profile.interests.join(", ")}
+              </li>
+            ) : (
+              <li className="text-xs font-bold uppercase italic leading-tight text-white/50 sm:text-sm">
+                Coming next issue: interests &amp; hobbies
+              </li>
+            )}
+            <li className="text-xs font-bold uppercase leading-tight sm:text-sm">
+              <span className="text-red-500">Hotline &rarr;</span>{" "}
+              {profile.contact.phone}
+            </li>
+          </ul>
+        </div>
+
+        {/* Footer: barcode + links */}
+        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-white/30 pt-4 sm:flex-row">
+          <div className="flex items-end gap-[2px]" aria-hidden>
+            {BARCODE_PATTERN.map((w, i) => (
+              <span
+                key={i}
+                className="bg-white"
+                style={{ width: `${w}px`, height: i % 3 === 0 ? "28px" : "20px" }}
+              />
+            ))}
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-2">
             {profile.links.map((link) => (
               <a
                 key={link.label}
@@ -82,14 +100,14 @@ export default function Home() {
                     ? undefined
                     : "noopener noreferrer"
                 }
-                className="rounded-full border border-zinc-300 px-4 py-1.5 text-sm font-medium text-black transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-50 dark:hover:bg-zinc-900"
+                className="rounded-full border border-white/70 px-4 py-1.5 text-xs font-bold uppercase tracking-wide text-white transition-colors hover:bg-white hover:text-black"
               >
                 {link.label}
               </a>
             ))}
           </div>
-        </section>
-      </main>
+        </div>
+      </div>
     </div>
   );
 }
