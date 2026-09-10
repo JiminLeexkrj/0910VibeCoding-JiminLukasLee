@@ -1,0 +1,28 @@
+{
+  "name": { "en": "Jimin Lukas Lee", "kr": "이지민" },
+  "university": "Korea University (고려대학교)",
+  "department": "Data Science (데이터과학과)",
+  "contact": { "phone": "010-3908-5724", "email": "xkrjsznn@gmail.com" },
+  "interests": [],
+  "projects": [
+    {
+      "title": "Static Routing Simulator",
+      "year": "2022",
+      "stack": ["C"]
+    },
+    {
+      "title": "Crowd Density Monitoring System",
+      "year": "2022",
+      "stack": ["Arduino", "RaspberryPi", "C"]
+    },
+    {
+      "title": "Home Intrusion Detection System",
+      "year": "2023",
+      "stack": ["RaspberryPi", "C", "Python", "Linux"]
+    }
+  ],
+  "links": [
+    { "label": "Email", "url": "mailto:xkrjsznn@gmail.com" },
+    { "label": "GitHub", "url": "https://github.com/yourusername" }
+  ]
+}
